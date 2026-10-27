@@ -1,0 +1,6 @@
+.build
+build/
+
+db
+# CodeQL database (build artifact)
+codeql-db/

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  EDUCATIONAL ONLY. Deliberately insecure / excessive entitlements for MASTG demos.
+-->
+<plist version="1.0">
+<dict>
+	<!-- MASTG-DEMO-0036 — Debuggable Entitlement Enabled (MASTG-TEST-0261).
+	     get-task-allow lets a debugger attach to the (release) process. -->
+	<key>get-task-allow</key>
+	<true/>
+
+	<!-- MASTG-DEMO-0153 — Universal link handling (associated domains). -->
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:vulnerable.example.com</string>
+	</array>
+
+	<!-- MASTG-DEMO-0127 — Unjustified Capability Exposure due to Excessive
+	     Entitlements (MASTG-TEST-0363). None of these are used by the app. -->
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)asiern.Vulnerable.shared</string>
+	</array>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.asiern.Vulnerable.unused</string>
+	</array>
+</dict>
+</plist>

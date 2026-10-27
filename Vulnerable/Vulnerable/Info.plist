@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  EDUCATIONAL ONLY. This Info.plist deliberately contains insecure MASTG demo
+  configurations. Generated Xcode keys (scene manifest, launch screen, etc.)
+  are merged in automatically because GENERATE_INFOPLIST_FILE is still YES.
+-->
+<plist version="1.0">
+<dict>
+	<!-- MASTG-DEMO-0126 — Deceptive location purpose string (MASTG-TEST-0361).
+	     The string claims weather personalization but the data is used for tracking. -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We use your location to personalize local weather for you.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We use your location to personalize local weather for you.</string>
+
+	<!-- MASTG-DEMO-0134 / 0149 — Custom URL scheme "vulnerable://" handled with
+	     no input validation / insecure deserialization. -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>asiern.Vulnerable</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>vulnerable</string>
+			</array>
+		</dict>
+	</array>
+
+	<!-- App Transport Security: deliberately weakened. -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<!-- MASTG-DEMO-0083 — Insecure ATS Configuration Allowing Cleartext Traffic
+		     (MASTG-TEST-0322). -->
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+
+		<!-- MASTG-DEMO-0109 — ATS TLS Policy Exceptions in Info.plist
+		     (MASTG-TEST-0342): per-domain cleartext + lowered TLS + forward
+		     secrecy disabled.
+		     MASTG-DEMO-0148 — No NSPinnedDomains anywhere here, i.e. missing
+		     certificate pinning in ATS (MASTG-TEST-0385). -->
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>insecure.example.com</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSExceptionMinimumTLSVersion</key>
+				<string>TLSv1.0</string>
+				<key>NSExceptionRequiresForwardSecrecy</key>
+				<false/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
+		</dict>
+	</dict>
+</dict>
+</plist>
